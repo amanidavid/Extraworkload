@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\AttandenceRecords;
 use Illuminate\Support\Facades\DB;
-use App\Models\Clock;
+
 use App\Models\Schedule;
+use App\Models\Enrollment;
+use App\Models\Attandencesheet;
 use App\Models\Module;
 use App\Models\Tag;
 use Carbon\Carbon;
@@ -21,7 +23,6 @@ use Carbon\Carbon;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/tests',[timeTables::class,'create']);
 Route::get('/testing', function (Request $request) {
 
     // Query to retrieve the schedule details
@@ -32,56 +33,115 @@ Route::get('/testing', function (Request $request) {
     ]);
 });
 
+// Route::post('/test', function (Request $request) {
+//     try {
+//         // Retrieve the UID from the request
+//         $cardUID = $request->getContent();
+//         $RESULT=Tag::all()->first();
+//         // $values = explode(':', $request->input() );
+//         // Verify the card UID
+//         if ($cardUID == $RESULT->rfid_card) {
+//         }
+//     } catch (\Exception $e) {
+//         // Return error response if something goes wrong
+//         return response()->json(['error' => 'Failed to process RFID scan', 'message' => $e->getMessage()], 500);
+//     }
+    
+    
+
+// });
+;
+
 Route::post('/test', function (Request $request) {
     try {
         // Retrieve the UID from the request
         $cardUID = $request->getContent();
-        $RESULT=Tag::all()->first();
-        // $values = explode(':', $request->input() );
+        
+        // Retrieve the RFID card from the database
+        $tag = Tag::where('rfid_card', $cardUID)->first();
+
         // Verify the card UID
-        if ($cardUID == $RESULT->rfid_card) {
-            // Get current day of the week (1 for Monday through 7 for Sunday)
-             // SQL Query to retrieve the schedule details
-                // Get current day of the week (1 for Monday through 7 for Sunday)
-            $currentDay = now()->format('l'); // Get the current weekday name
-            $currentTime = now()->format('H:i:s'); // Get the current time
+        if ($tag && $cardUID == $tag->rfid_card) {
+            // Call stored procedures
+            $response = DB::select('call getModule()');
+            $moduleEnrolls = DB::select('call getEnrolls()');
 
-            // Query to retrieve the schedule details
-            $scheduleDetails = DB::table('schedules')
-                ->join('modules', 'schedules.module_id', '=', 'modules.id')
-                ->join('seasons', 'schedules.wdays_id', '=', 'seasons.id')
-                ->join('clocks as start_clock', 'schedules.start_time_id', '=', 'start_clock.id')
-                ->join('clocks as end_clock', 'schedules.end_time_id', '=', 'end_clock.id')
-                ->join('venues', 'schedules.venue_id', '=', 'venues.id')
-                ->select(
-                    'seasons.weekday_name',
-                    'modules.module_code',
-                    'start_clock.clock as start_time',
-                    'end_clock.clock as end_time',
-                    'venues.venue'
-                )
-                ->where('seasons.weekday_name', $currentDay)
-                ->whereTime('start_clock.clock', '<=', $currentTime)
-                ->whereTime('end_clock.clock', '>=', $currentTime)
-                ->orderBy('weekday_name')
-                ->orderBy('start_time')
-                ->orderBy('end_time')
-                ->get();
+            // Extract module codes from getEnrolls() result
+            $enrollmentModule = array_map(function ($item) {
+                return $item->module_code;
+            }, $moduleEnrolls);
 
-            return Response::json([
-               $scheduleDetails
-            ]);
+            // Extract module codes from getModule() result
+            $moduleCodes = array_map(function ($item) {
+                return $item->module_code;
+            }, $response);
+
+            $matches = [];
+
+            foreach ($moduleCodes as $moduleCode) {
+                if (in_array($moduleCode, $enrollmentModule)) {
+                    // Find schedule with the module code
+                    $schedule = Schedule::whereHas('module', function ($query) use ($moduleCode) {
+                        $query->where('module_code', $moduleCode);
+                    })->first();
+
+                    if (!$schedule) {
+                        $matches[] = [
+                            "module_code" => $moduleCode,
+                            "message" => "Schedule not found for module code: $moduleCode"
+                        ];
+                        continue;
+                    }
+                    $scheduleId = $schedule->id;
+
+                    // Find enrollment with the module code
+                    $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
+                        $query->where('module_code', $moduleCode);
+                    })->first();
+
+                    if (!$enrollment) {
+                        $matches[] = [
+                            "module_code" => $moduleCode,
+                            "message" => "Enrollment not found for module code: $moduleCode"
+                        ];
+                        continue;
+                    }
+                    $enrollmentId = $enrollment->id;
+
+                    // Create attendance sheet
+                    $attendanceSheet = new Attandencesheet();
+                    $attendanceSheet->schedule_id = $scheduleId;
+                    $attendanceSheet->enrollment_id = $enrollmentId;
+
+                    if ($attendanceSheet->save()) {
+                        $matches[] = [
+                            "module_code" => $moduleCode,
+                            "message" => "Attendance sheet created successfully"
+                        ];
+                    } else {
+                        $matches[] = [
+                            "module_code" => $moduleCode,
+                            "message" => "Failed to save attendance sheet"
+                        ];
+                    }
+                } else {
+                    $matches[] = [
+                        "module_code" => $moduleCode,
+                        "message" => "Match not found"
+                    ];
+                }
+            }
+
+            return response()->json($matches);
         } else {
-            return response()->json(['error' => 'Invalid card UID'], 400);
+            return response()->json(['error' => 'Invalid RFID card'], 400);
         }
     } catch (\Exception $e) {
         // Return error response if something goes wrong
         return response()->json(['error' => 'Failed to process RFID scan', 'message' => $e->getMessage()], 500);
     }
-    
-    
-
 });
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
