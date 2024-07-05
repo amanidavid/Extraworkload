@@ -16,7 +16,7 @@ use App\Livewire\timeTables;
 */
 
 Route::get('/', function () {
-    return response()->json(['message' => 'Hello from Laravel!is complex']);
+    // return response()->json(['message' => 'Hello from Laravel!is complex']);
     return view('welcome');
 });
 Route::get('/testing', function (Request $request) {
