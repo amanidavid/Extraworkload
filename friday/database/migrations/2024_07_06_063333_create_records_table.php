@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attancencerecords_tables', function (Blueprint $table) {
+        Schema::create('records', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ratiba_id');
             $table->unsignedBigInteger('enrollment_id');
@@ -19,9 +19,10 @@ return new class extends Migration
             
 
             // Foreign key constraints
-            $table->foreign('ratiba_id')->references('id')->on('ratiba')->onDelete('cascade');
+            $table->foreign('ratiba_id')->references('id')->on('ratibas')->onDelete('cascade');
             $table->foreign('enrollment_id')->references('id')->on('enrollments')->onDelete('cascade');
       
+       
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attancencerecords_tables');
+        Schema::dropIfExists('records');
     }
 };

@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class attandencerecord extends Model
+
+class record extends Model
 {
     use HasFactory;
-    
-    protected $table = 'attancencerecords_tables';
+    protected $table = 'records';
 
     protected $fillable = [
         'ratiba_id',

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Ratiba;
 use App\Models\Enrollment;
-use App\Models\Attandencerecord;
+use App\Models\Record;
 use App\Models\Module;
 use App\Models\Tag;
 use Carbon\Carbon;
@@ -81,7 +81,7 @@ Route::post('/test', function (Request $request) {
             foreach ($moduleCodes as $moduleCode) {
                 if (in_array($moduleCode, $enrollmentModule)) {
                     // Find schedule with the module code
-                    $schedule = Schedule::whereHas('module', function ($query) use ($moduleCode) {
+                    $schedule = Ratiba::whereHas('module', function ($query) use ($moduleCode) {
                         $query->where('module_code', $moduleCode);
                     })->first();
 
@@ -92,7 +92,7 @@ Route::post('/test', function (Request $request) {
                         ];
                         continue;
                     }
-                    $scheduleId = $ratiba->id;
+                    $scheduleId = $schedule->id;
 
                     // Find enrollment with the module code
                     $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
@@ -109,7 +109,7 @@ Route::post('/test', function (Request $request) {
                     $enrollmentId = $enrollment->id;
 
                     // Create attendance sheet
-                    $attendanceSheet = new attancencerecords_tables();
+                    $attendanceSheet = new record();
                     $attendanceSheet->ratiba_id = $scheduleId;
                     $attendanceSheet->enrollment_id = $enrollmentId;
 

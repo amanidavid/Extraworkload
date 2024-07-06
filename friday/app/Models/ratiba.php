@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ratiba extends Model
 {
     use HasFactory;
+
+    protected $table = 'ratibas';
+    
     protected $fillable = [
         'wdays_id',
         'module_id',
@@ -41,8 +44,8 @@ class ratiba extends Model
         return $this->belongsTo(Venue::class);
     }
 
-    public function attandencerecord()
+    public function record()
     {
-        return $this->hasMany(attandencerecord::class);
+        return $this->hasMany(record::class);
     }
 }
