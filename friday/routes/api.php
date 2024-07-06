@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\AttandenceRecords;
 use Illuminate\Support\Facades\DB;
 
-use App\Models\Schedule;
+use App\Models\Ratiba;
 use App\Models\Enrollment;
-use App\Models\Attandencesheet;
+use App\Models\Attandencerecord;
 use App\Models\Module;
 use App\Models\Tag;
 use Carbon\Carbon;
@@ -92,7 +92,7 @@ Route::post('/test', function (Request $request) {
                         ];
                         continue;
                     }
-                    $scheduleId = $schedule->id;
+                    $scheduleId = $ratiba->id;
 
                     // Find enrollment with the module code
                     $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
@@ -109,8 +109,8 @@ Route::post('/test', function (Request $request) {
                     $enrollmentId = $enrollment->id;
 
                     // Create attendance sheet
-                    $attendanceSheet = new Attandencesheet();
-                    $attendanceSheet->schedule_id = $scheduleId;
+                    $attendanceSheet = new attancencerecords_tables();
+                    $attendanceSheet->ratiba_id = $scheduleId;
                     $attendanceSheet->enrollment_id = $enrollmentId;
 
                     if ($attendanceSheet->save()) {
