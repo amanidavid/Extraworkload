@@ -10,6 +10,7 @@ use App\Models\Enrollment;
 use App\Models\Record;
 use App\Models\Module;
 use App\Models\Tag;
+use App\Models\Rfid;
 use Carbon\Carbon;
 
 
@@ -52,22 +53,201 @@ Route::get('/testing', function (Request $request) {
 // });
 ;
 
+// Route::post('/test', function (Request $request) {
+//     try {
+//         // Retrieve the UID from the request
+//         $cardUID = $request->getContent();
+        
+//         // Retrieve the RFID card from the database
+//         $tag = Tag::where('rfid_card', $cardUID)->first();
+
+//         // Verify the card UID
+//         if ($tag && $cardUID == $tag->rfid_card) {
+//             // Call stored procedures
+//             $response = DB::select('call getModule()');
+//             $moduleEnrolls = DB::select('call getEnrolls()');
+
+//             // Extract module codes from getEnrolls() result
+//             $enrollmentModule = array_map(function ($item) {
+//                 return $item->module_code;
+//             }, $moduleEnrolls);
+
+//             // Extract module codes from getModule() result
+//             $moduleCodes = array_map(function ($item) {
+//                 return $item->module_code;
+//             }, $response);
+
+//             $matches = [];
+
+//             foreach ($moduleCodes as $moduleCode) {
+//                 if (in_array($moduleCode, $enrollmentModule)) {
+//                     // Find schedule with the module code
+//                     $schedule = Ratiba::whereHas('module', function ($query) use ($moduleCode) {
+//                         $query->where('module_code', $moduleCode);
+//                     })->first();
+
+//                     if (!$schedule) {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Schedule not found for module code: $moduleCode"
+//                         ];
+//                         continue;
+//                     }
+//                     $scheduleId = $schedule->id;
+
+//                     // Find enrollment with the module code
+//                     $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
+//                         $query->where('module_code', $moduleCode);
+//                     })->first();
+
+//                     if (!$enrollment) {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Enrollment not found for module code: $moduleCode"
+//                         ];
+//                         continue;
+//                     }
+//                     $enrollmentId = $enrollment->id;
+
+//                     // Create attendance sheet
+//                     $attendanceSheet = new record();
+//                     $attendanceSheet->ratiba_id = $scheduleId;
+//                     $attendanceSheet->enrollment_id = $enrollmentId;
+
+//                     if ($attendanceSheet->save()) {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Attendance sheet created successfully"
+//                         ];
+//                     } else {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Failed to save attendance sheet"
+//                         ];
+//                     }
+//                 } else {
+//                     $matches[] = [
+//                         "module_code" => $moduleCode,
+//                         "message" => "Match not found"
+//                     ];
+//                 }
+//             }
+
+//             return response()->json($matches);
+//         } else {
+//             return response()->json(['error' => 'Invalid RFID card'], 400);
+//         }
+//     } catch (\Exception $e) {
+//         // Return error response if something goes wrong
+//         return response()->json(['error' => 'Failed to process RFID scan', 'message' => $e->getMessage()], 500);
+//     }
+// });
+// Route::post('/test', function (Request $request) {
+//     try {
+//         // Retrieve the UID from the request
+//         $cardUID = $request->getContent();
+        
+//         // Retrieve the RFID tag from the database
+//         $tag = Rfid::where('uid', $cardUID)->first();
+
+//         // Verify the card UID
+//         if ($tag && $cardUID == $tag->uid) {
+//             // Call stored procedures
+//             $response = DB::select('call getModule()');
+//             $moduleEnrolls = DB::select('call getEnrolls()');
+
+//             // Extract module codes from getEnrolls() result
+//             $enrollmentModule = array_map(function ($item) {
+//                 return $item->module_code;
+//             }, $moduleEnrolls);
+
+//             // Extract module codes from getModule() result
+//             $moduleCodes = array_map(function ($item) {
+//                 return $item->module_code;
+//             }, $response);
+
+//             $matches = [];
+
+//             foreach ($moduleCodes as $moduleCode) {
+//                 // Check if the module code is in enrolled modules
+//                 if (in_array($moduleCode, $enrollmentModule)) {
+//                     // Find schedule with the module code
+//                     $schedule = Ratiba::whereHas('module', function ($query) use ($moduleCode) {
+//                         $query->where('module_code', $moduleCode);
+//                     })->first();
+
+//                     if (!$schedule) {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Schedule not found for module code: $moduleCode"
+//                         ];
+//                         continue;
+//                     }
+//                     $scheduleId = $schedule->id;
+
+//                     // Find enrollment with the module code
+//                     $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
+//                         $query->where('module_code', $moduleCode);
+//                     })->first();
+
+//                     if (!$enrollment) {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Enrollment not found for module code: $moduleCode"
+//                         ];
+//                         continue;
+//                     }
+//                     $enrollmentId = $enrollment->id;
+
+//                     // Create attendance sheet
+//                     $attendanceSheet = new Record();
+//                     $attendanceSheet->ratiba_id = $scheduleId;
+//                     $attendanceSheet->enrollment_id = $enrollmentId;
+
+//                     if ($attendanceSheet->save()) {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Attendance sheet created successfully"
+//                         ];
+//                     } else {
+//                         $matches[] = [
+//                             "module_code" => $moduleCode,
+//                             "message" => "Failed to save attendance sheet"
+//                         ];
+//                     }
+//                 } else {
+//                     $matches[] = [
+//                         "module_code" => $moduleCode,
+//                         "message" => "RFID card not enrolled in any module"
+//                     ];
+//                 }
+//             }
+
+//             return response()->json($matches);
+//         } else {
+//             return response()->json(['error' => 'Invalid RFID card'], 400);
+//         }
+//     } catch (\Exception $e) {
+//         // Return error response if something goes wrong
+//         return response()->json(['error' => 'Failed to process RFID scan', 'message' => $e->getMessage()], 500);
+//     }
+// });
 Route::post('/test', function (Request $request) {
     try {
         // Retrieve the UID from the request
         $cardUID = $request->getContent();
-        
-        // Retrieve the RFID card from the database
-        $tag = Tag::where('rfid_card', $cardUID)->first();
+
+        // Retrieve the RFID tag from the database
+        $tag = Rfid::where('uid', $cardUID)->first();
 
         // Verify the card UID
-        if ($tag && $cardUID == $tag->rfid_card) {
+        if ($tag && $cardUID == $tag->uid) {
             // Call stored procedures
             $response = DB::select('call getModule()');
             $moduleEnrolls = DB::select('call getEnrolls()');
 
             // Extract module codes from getEnrolls() result
-            $enrollmentModule = array_map(function ($item) {
+            $enrollmentModules = array_map(function ($item) {
                 return $item->module_code;
             }, $moduleEnrolls);
 
@@ -79,7 +259,12 @@ Route::post('/test', function (Request $request) {
             $matches = [];
 
             foreach ($moduleCodes as $moduleCode) {
-                if (in_array($moduleCode, $enrollmentModule)) {
+                // Check if the RFID card is enrolled in the module
+                $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
+                    $query->where('module_code', $moduleCode);
+                })->where('uid_id', $tag->id)->first();
+
+                if ($enrollment) {
                     // Find schedule with the module code
                     $schedule = Ratiba::whereHas('module', function ($query) use ($moduleCode) {
                         $query->where('module_code', $moduleCode);
@@ -93,23 +278,10 @@ Route::post('/test', function (Request $request) {
                         continue;
                     }
                     $scheduleId = $schedule->id;
-
-                    // Find enrollment with the module code
-                    $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
-                        $query->where('module_code', $moduleCode);
-                    })->first();
-
-                    if (!$enrollment) {
-                        $matches[] = [
-                            "module_code" => $moduleCode,
-                            "message" => "Enrollment not found for module code: $moduleCode"
-                        ];
-                        continue;
-                    }
                     $enrollmentId = $enrollment->id;
 
                     // Create attendance sheet
-                    $attendanceSheet = new record();
+                    $attendanceSheet = new Record();
                     $attendanceSheet->ratiba_id = $scheduleId;
                     $attendanceSheet->enrollment_id = $enrollmentId;
 
@@ -125,9 +297,10 @@ Route::post('/test', function (Request $request) {
                         ];
                     }
                 } else {
+                    // If the RFID card is not enrolled in the module, add a message indicating this
                     $matches[] = [
                         "module_code" => $moduleCode,
-                        "message" => "Match not found"
+                        "message" => "RFID card not enrolled in this module"
                     ];
                 }
             }
@@ -141,6 +314,7 @@ Route::post('/test', function (Request $request) {
         return response()->json(['error' => 'Failed to process RFID scan', 'message' => $e->getMessage()], 500);
     }
 });
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

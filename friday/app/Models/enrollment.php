@@ -17,10 +17,10 @@ class enrollment extends Model
         'uid_id'
     ];
 
-    public function attandencesheets()
-    {
-        return $this->hasMany(Attandencesheet::class);
-    }
+    // public function attandencesheets()
+    // {
+    //     return $this->hasMany(Attandencesheet::class);
+    // }
 
     public function module()
     {
