@@ -200,7 +200,7 @@ Route::post('/test', function (Request $request) {
                     ->whereRaw('CURTIME() BETWEEN start_clock.clock AND end_clock.clock')
                     ->get();
 
-                    if ($existingAttendance) {
+                    if (!$existingAttendance) {
                         $matches[] = [
                             "module_code" => $moduleCode,
                             "message" => "RFID card already scanned for this module within the scheduled time"

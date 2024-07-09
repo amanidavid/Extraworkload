@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\AttandenceComponent;
-use App\Livewire\timeTables;
+use Illuminate\Http\Request;
+// use App\Livewire\timeTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,15 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::post('/attandencerecords', [AttandenceComponent::class, 'getEspData']);
-Route::post('/time-schedule', [timeTables::class, 'create']);
-Route::post('/time-schedule', [timeTables::class, 'store']);
+ Route::get('/livewire/attandence-component', [AttandenceComponent::class, 'render'])->name('form.show');
+
+//  Route::get('/attendance/pdf-viewer', function () {
+//     return view('attendance.pdf-viewer');
+// });
+ Route::post('/attandance/generate', [AttandenceComponent::class, 'generatePDF'])->name('attendance.generate');
+ 
+ Route::get('/attendance/pdf-viewer', function (Request $request) {
+    $pdfPath = $request->query('pdfPath');
+    return view('attandence.pdf-viewer', compact('pdfPath'));
+})->name('attandence.pdf-viewer');
 
