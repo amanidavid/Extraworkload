@@ -33,18 +33,18 @@
                                                     <label>Month:</label>
                                                     <select class="chosen-select form-control" name="month" tabindex="-1" required>
                                                         <option value="">Select Month</option>
-                                                        <option value="january ">1</option>
-														<option value="february ">2</option>
-														<option value="march">3</option>
-														<option value="april Islands">4</option>
-														<option value="may">5</option>
-														<option value="june">6</option>
-														<option value="7 ">july</option>
-														<option value="august">8</option>
-														<option value="september">9</option>
-														<option value="october">10</option>
-														<option value="november">11</option>
-														<option value="december">12</option>
+                                                        <option value="1 ">jJanuary</option>
+														<option value="2 ">February</option>
+														<option value="3">March</option>
+														<option value="4">aPRIL</option>
+														<option value="5">May</option>
+														<option value="6">June</option>
+														<option value="7 ">July</option>
+														<option value="8">August</option>
+														<option value="9">September</option>
+														<option value="10">October</option>
+														<option value="11">November</option>
+														<option value="12">December</option>
                                                     </select>
                                                 </div>
                                             </div>

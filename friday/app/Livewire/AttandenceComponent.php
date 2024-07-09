@@ -23,12 +23,8 @@ class AttandenceComponent extends Component
         $module_code = $request->input('module_code');
         $month = $request->input('month');
 
-        // $pdf = new Dompdf();
-        // $options = new Options();
-        // $options->set('isHtml5ParserEnabled', true);
-        // $pdf->setOptions($options);
 
-         // Convert month string to integer
+    // Convert month string to integer
     // $monthNumber = date_parse($month)['month'];
 
         $results = DB::select('CALL getRecords(?, ?)', [$month, $module_code]);
@@ -37,21 +33,22 @@ class AttandenceComponent extends Component
 
         // return $pdf->stream('attandence.pdf-viewer');
             // Save the PDF to the public path
-  // Define the PDF path
-  $pdfPath = 'pdf/attendance.pdf';
-  $fullPdfPath = public_path($pdfPath);
+        // Define the PDF path
+        $pdfPath = 'pdf/attendance.pdf';
+        $fullPdfPath = public_path($pdfPath);
 
   // Ensure the directory exists
   $directory = dirname($fullPdfPath);
+  //IF not exist create directory,755 permission for users,true means recursive creation of directory
   if (!is_dir($directory)) {
       mkdir($directory, 0755, true);
-  }
+    }
 
-  // Save the PDF to the public path
-  $pdf->save($fullPdfPath);
+    // Save the PDF to the public path
+    $pdf->save($fullPdfPath);
 
-  // Redirect to the PDF viewer with the path to the PDF
-  return redirect()->route('attandence.pdf-viewer', ['pdfPath' => $pdfPath]);
+    // Redirect to the PDF viewer with the path to the PDF
+     return redirect()->route('attandence.pdf-viewer', ['pdfPath' => $pdfPath]);
     }
    
  

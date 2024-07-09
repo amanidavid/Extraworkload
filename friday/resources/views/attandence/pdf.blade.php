@@ -31,7 +31,7 @@
         <h1>THE INSTITUTE OF FINANCE MANAGEMENT</h1>
         @if (!empty($results))
             <h2>DEPARTMENT OF {{ $results[0]->department_name }}</h2>
-            <h3>Course Name: {{ $results[0]->coursename }}</h3>
+            <h3>{{ $results[0]->coursename }}</h3>
             <h3>ATTENDANCE SHEET</h3>
         @else
             <h2>No Records Found</h2>
