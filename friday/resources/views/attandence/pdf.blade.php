@@ -47,7 +47,8 @@
                     <tr>
                         <th>S/N</th>
                         <th>Full Name</th>
-                        <th>Attendance Attempt</th>
+                        <th>Registration NUmber</th>
+                        <th>Total Session Attempt</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,6 +56,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $result->student_name }}</td>
+                            <td>{{ $result->Registration }}</td>
                             <td>{{ $result->attendance_count }}</td>
                         </tr>
                     @endforeach

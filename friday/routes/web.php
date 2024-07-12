@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\AttandenceComponent;
+use App\Livewire\claimformComponent;
 use Illuminate\Http\Request;
 // use App\Livewire\timeTables;
 
@@ -44,14 +45,18 @@ Route::middleware([
 });
 
  Route::get('/livewire/attandence-component', [AttandenceComponent::class, 'render'])->name('form.show');
+ Route::get('/livewire/attandence-records', [claimformComponent::class, 'render'])->name('form.shows');
 
-//  Route::get('/attendance/pdf-viewer', function () {
-//     return view('attendance.pdf-viewer');
-// });
  Route::post('/attandance/generate', [AttandenceComponent::class, 'generatePDF'])->name('attendance.generate');
+ Route::post('/claim/generate', [claimformComponent::class, 'getClaimForm'])->name('claim.generate');
  
  Route::get('/attendance/pdf-viewer', function (Request $request) {
     $pdfPath = $request->query('pdfPath');
     return view('attandence.pdf-viewer', compact('pdfPath'));
 })->name('attandence.pdf-viewer');
+
+Route::get('/claim/pdf-viewer', function (Request $request) {
+    $pdfPath = $request->query('pdfPath');
+    return view('claim.pdf-viewer', compact('pdfPath'));
+})->name('claim.pdf-viewer');
 

@@ -6,9 +6,8 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Module;
-// use Carbon\Carbon;
 use  PDF;
-// use Dompdf\Options;
+
 
 class AttandenceComponent extends Component
 {
