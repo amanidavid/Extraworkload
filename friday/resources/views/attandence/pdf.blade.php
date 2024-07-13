@@ -31,10 +31,12 @@
         <h1>THE INSTITUTE OF FINANCE MANAGEMENT</h1>
         @if (!empty($results))
             <h2>DEPARTMENT OF {{ $results[0]->department_name }}</h2>
-            <h3>{{ $results[0]->coursename }}</h3>
+            <h3>{{ $results[0]->coursename }} {{ $results[0]->year_name }} </h3>
+            <h3>{{ $results[0]->event_name }} </h3>
             <h3>ATTENDANCE SHEET</h3>
         @else
             <h2>No Records Found</h2>
+            <p>Parameters: Module Code - {{ $module_code }}, Month - {{ $month }}, Event Name - {{ $event_name }}</p>
         @endif
     </div>
     <div class="content">
@@ -56,14 +58,15 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $result->student_name }}</td>
-                            <td>{{ $result->Registration }}</td>
-                            <td>{{ $result->attendance_count }}</td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         @else
             <p>No attendance records found for the selected month and module.</p>
+            <p>Parameters: Module Code - {{ $module_code }}, Month - {{ $month }}, Event Name - {{ $event_name }}</p>
         @endif
     </div>
 </body>

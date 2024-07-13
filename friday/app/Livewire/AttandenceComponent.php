@@ -6,6 +6,7 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Module;
+use App\Models\Event;
 use  PDF;
 
 
@@ -14,21 +15,25 @@ class AttandenceComponent extends Component
     public function render()
     {
         $module = Module::all();
-        return view('livewire.attandence-component',compact('module'));
+        $events  = Event::all();
+        return view('livewire.attandence-component',compact('module','events'));
     }
     
     public function generatePDF(Request $request){
 
         $module_code = $request->input('module_code');
         $month = $request->input('month');
+        $event_name = $request->input('event_name');
 
 
     // Convert month string to integer
     // $monthNumber = date_parse($month)['month'];
 
-        $results = DB::select('CALL getRecords(?, ?)', [$month, $module_code]);
+    // Call stored procedure to fetch attendance data
+    $results = DB::select('CALL GetAttendance(?, ?, ?)', [ $event_name, $month,$module_code]);
 
-        $pdf = PDF::loadView('attandence.pdf', compact('results', 'month', 'module_code'));
+    // Load view and generate PDF
+    $pdf = PDF::loadView('attandence.pdf', compact('results', 'month', 'module_code', 'event_name'));
 
         // return $pdf->stream('attandence.pdf-viewer');
             // Save the PDF to the public path

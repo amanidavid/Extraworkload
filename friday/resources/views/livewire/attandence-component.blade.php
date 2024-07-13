@@ -17,26 +17,16 @@
                                     <form action="{{ route('attendance.generate')}}" method="POST">
                                         @csrf
                                         <div class="row">
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                <div class="chosen-select-single mg-b-20">
-                                                    <label>Module:</label>
-                                                    <select class="chosen-select form-control" name="module_code" tabindex="-1" required>
-                                                        <option value="">Select Module</option>
-                                                        @foreach ($module as $module)
-                                                            <option value="{{ $module->module_code }}">{{ $module->module_code }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
+                                           
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="chosen-select-single mg-b-20">
                                                     <label>Month:</label>
                                                     <select class="chosen-select form-control" name="month" tabindex="-1" required>
                                                         <option value="">Select Month</option>
-                                                        <option value="1 ">jJanuary</option>
+                                                        <option value="1 ">January</option>
 														<option value="2 ">February</option>
 														<option value="3">March</option>
-														<option value="4">aPRIL</option>
+														<option value="4">April</option>
 														<option value="5">May</option>
 														<option value="6">June</option>
 														<option value="7 ">July</option>
@@ -48,6 +38,29 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="chosen-select-single mg-b-20">
+                                                    <label>Event Name:</label>
+                                                    <select class="chosen-select form-control" name="event_name" tabindex="-1" required>
+                                                        <option value="">Select Event</option>
+                                                        @foreach ($events as $event)
+                                                            <option value="{{ $event->event_name }}">{{ $event->event_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="chosen-select-single mg-b-20">
+                                                    <label>Module:</label>
+                                                    <select class="chosen-select form-control" name="module_code" tabindex="-1" required>
+                                                        <option value="">Select Module</option>
+                                                        @foreach ($module as $module)
+                                                            <option value="{{ $module->module_code }}">{{ $module->module_code }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                     
                                         </div>
                                         <button type="submit" class="btn btn-primary">Generate PDF</button>
                                     </form>
