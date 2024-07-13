@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::get('/', function () {
     // return response()->json(['message' => 'Hello from Laravel!is complex']);
-    return view('welcome');
+    return view('auth/login');
 });
 Route::get('/testing', function (Request $request) {
 

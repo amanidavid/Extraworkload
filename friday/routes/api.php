@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Ratiba;
 use App\Models\Enrollment;
+use App\Models\lecture_in;
 use App\Models\Record;
 use App\Models\Module;
 use App\Models\Tag;
@@ -167,9 +168,13 @@ Route::post('/test', function (Request $request) {
                 // Check if the RFID card is enrolled in the module
                 $enrollment = Enrollment::whereHas('module', function ($query) use ($moduleCode) {
                     $query->where('module_code', $moduleCode);
+                })->where('uid_id', $tag->id)->first();  
+                
+                $lecture = lecture_in::whereHas('module', function ($query) use ($moduleCode) {
+                    $query->where('module_code', $moduleCode);
                 })->where('uid_id', $tag->id)->first();
 
-                if ($enrollment) {
+                if ($enrollment || $lecture) {
                     // Find schedule with the module code
                     $schedule = Ratiba::whereHas('module', function ($query) use ($moduleCode) {
                         $query->where('module_code', $moduleCode);
@@ -183,8 +188,11 @@ Route::post('/test', function (Request $request) {
                         continue;
                     }
 
-                    $scheduleId = $schedule->id;
-                    $enrollmentId = $enrollment->id;
+                    $scheduleId = $schedule->id;   
+                     $enrollmentId = $enrollment ? $enrollment->id : null;  // Ensure enrollment ID is set only if enrollment is found
+                    $lectureId = $lecture ? $lecture->id : null;  // Ensure lecture ID is set only if lecture is found
+    
+                   
 
                     // Check for existing attendance within the module's scheduled time
                     $existingAttendance  = DB::table('records')
@@ -210,6 +218,7 @@ Route::post('/test', function (Request $request) {
                         $attendanceSheet = new Record();
                         $attendanceSheet->ratiba_id = $scheduleId;
                         $attendanceSheet->enrollment_id = $enrollmentId;
+                        $attendanceSheet->lecture_id = $lectureId;
 
                         if ($attendanceSheet->save()) {
                             $matches[] = [

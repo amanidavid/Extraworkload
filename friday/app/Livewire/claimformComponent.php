@@ -25,7 +25,7 @@ class claimformComponent extends Component
 
         //call stored procedure
         // $extraworkload = DB::select('CALL CalculateLectureTutorialHours(?, ?)', [$user_id, $month]);
-        $extraworkload = DB::select('CALL GetLectureAndTutorialHours(?, ?)', [$user_id, $month]);
+        $extraworkload = DB::select('CALL GetLecturerReport(?, ?)', [$user_id, $month]);
         
         $pdf = PDF::loadView('claim.pdf', compact('extraworkload', 'user_id', 'month'));
 

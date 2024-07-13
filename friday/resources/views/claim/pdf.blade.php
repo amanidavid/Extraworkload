@@ -28,13 +28,15 @@
         }
         table, th, td {
             border: 1px solid #ccc;
-            padding: 8px;
+            padding: 4px;
         }
         th {
             background-color: #f2f2f2;
             font-weight: bold;
             text-align: left;
         }
+
+   
         .summary-table {
             margin-top: 20px;
         }
@@ -48,12 +50,13 @@
             margin-top: 20px;
             text-align: center;
         }
+        /* Ensure the table is responsive */
+
     </style>
 </head>
 <body>
     <div class="container">
         
-        <img src="{{url ('img/ifm.png')}}" alt="Institute Logo">           
         <h2>THE INSTITUTE OF FINANCE MANAGEMENT</h2>
         <p>CLAIM FOR EXTRA HOURS TEACHING WORKLOAD</p>
         <p>(FULL/PART TIME ACADEMIC STAFF)</p>
@@ -85,8 +88,8 @@
                 <td>{{ $item->Department }}</td>
                 <td>{{ $item->module_code }}</td>
                 <td>{{ $item->Programme }}</td>
-                <td>{{ $item->lecture_hours }}</td>
-                <td>{{ $item->tutorial_hours }}</td>
+                <td>{{ $item->total_lecture_hours }}</td>
+                <td>{{ $item->total_tutorial_hours }}</td>
                 <td>{{ $item->Total }}</td>
             </tr>
             @endforeach
@@ -110,15 +113,15 @@
                 <td>{{ $extraworkload[0]->total_lecture_hours }}</td>
                 <td>{{ $extraworkload[0]->total_tutorial_hours }}</td>
                 {{-- <td>(Your data here)</td> --}}
-                <td>{{ $extraworkload[0]->total_hours }}</td>
+                <td>{{ $extraworkload[0]->overall_total }}</td>
             </tr>
             <tr>
                 <td>MIN WORKLOAD</td>
-                <td colspan="4">{{ $extraworkload[0]->min_workload }}</td>
+                <td colspan="4">{{ $extraworkload[0]->MinWorkload }}</td>
             </tr>
             <tr>
                 <td>CLAIMED EXTRA HOURS</td>
-                <td colspan="4">{{ $extraworkload[0]->extra_claimed_hours }}</td>
+                <td colspan="4">{{ $extraworkload[0]->extra_claimed_hrs }}</td>
             </tr>
         </table>
         @else
@@ -126,6 +129,36 @@
         <h2>No Records Found For Summary</h2>
 
     @endif
+
+    <table>
+        <thead>
+            <tr>
+                {{-- <th>S/No</th> --}}
+                <th>TRANSPORT ALLOWANCE</th>
+                <th>NUMBER OF SESSIONS/DAYS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{-- @foreach($extraworkload as $index => $result) --}}
+            <tr>
+                {{-- <td>{{ $index + 1 }}</td> --}}
+                <td>TAUGHT MAIN CAMPUS FROM 7 00PM</td>
+                <td>{{ $extraworkload[0]->TAUGHT_MAIN_CAMPUS_FROM_7_00PM }}</td>
+            </tr>
+            <tr>
+                {{-- <td>{{ $index + 2 }}</td> --}}
+                <td>TAUGHT MAKTABA VENUES</td>
+                <td>{{ $extraworkload[0]->TAUGHT_MAKTABA_VENUES }}</td>
+            </tr>
+            <tr>
+                {{-- <td>{{ $index + 3 }}</td> --}}
+                <td>TAUGHT DURING WEEKENDS</td>
+                <td>{{ $extraworkload[0]->TAUGHT_DURING_WEEKENDS }}</td>
+            </tr>
+            {{-- @endforeach --}}
+        </tbody>
+    </table>
+    
 
         <div class="footer">
             <p><strong>CERTIFICATION</strong></p>
