@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('records', function (Blueprint $table) {
             //
             
-            $table->unsignedBigInteger('lecture_id')->after('enrollment_id');
+            $table->unsignedBigInteger('lecture_id')->nullable()->after('enrollment_id');
         
             // Foreign key constraints
             $table->foreign('lecture_id')->references('id')->on('lecture_ins_tables')->onDelete('cascade');

@@ -30,9 +30,9 @@
     <div class="header">
         <h1>THE INSTITUTE OF FINANCE MANAGEMENT</h1>
         @if (!empty($results))
-            <h2>DEPARTMENT OF {{ $results[0]->department_name }}</h2>
-            <h3>{{ $results[0]->coursename }} {{ $results[0]->year_name }} </h3>
-            <h3>{{ $results[0]->event_name }} </h3>
+            <h2>DEPARTMENT OF {{ $depertment->dept_name }}</h2>
+            <h3>{{ $module_code }} {{ $module_code }} </h3>
+            <h3>{{ $event_name }} </h3>
             <h3>ATTENDANCE SHEET</h3>
         @else
             <h2>No Records Found</h2>
@@ -41,8 +41,8 @@
     </div>
     <div class="content">
         @if (!empty($results))
-            <p>Subject:  {{ $results[0]->module_code }} {{ $results[0]->modulename }} </p>
-            <p>Facilitator: {{ $results[0]->lecturer_name }}</p>
+            <p>Subject:  {{ $module_code }} {{ $module_code }} </p>
+            <p>Facilitator: {{ $user['name'] }}</p>
             <p>Month: {{ \Carbon\Carbon::create()->month($month)->format('F') }}</p>
             <table>
                 <thead>
@@ -50,7 +50,7 @@
                         <th>S/N</th>
                         <th>Full Name</th>
                         <th>Registration NUmber</th>
-                        <th>Total Session Attempt</th>
+                        <th>Sign Time</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,8 +58,8 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $result->student_name }}</td>
-                            <td></td>
-                            <td></td>
+                            <td>{{ $result->reg_number }}</td>
+                            <td>{{ $result->created_at }}</td>
                         </tr>
                     @endforeach
                 </tbody>
