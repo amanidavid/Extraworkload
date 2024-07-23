@@ -6,6 +6,10 @@ use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Module;
+use App\Models\Department;
+use App\Models\Faculty;
+use App\Models\Facultydepartment;
+use App\Models\Userdeparment;
 use  PDF;
 use Carbon\Carbon;
 
@@ -25,7 +29,21 @@ class claimformComponent extends Component
 
         //call stored procedure
         // $extraworkload = DB::select('CALL CalculateLectureTutorialHours(?, ?)', [$user_id, $month]);
-        $extraworkload = DB::select('CALL GetLecturerReport(?, ?)', [$user_id, $month]);
+        $extraworkload = DB::select('CALL GetLecturerStatistics(?, ?)', [$user_id, $month]);
+        // $extraworkloadses = Facultydepartment::join('departments','facultys_departments.department_id', '=','departments.id')
+        // ->join('facultys','facultys_departments.faculty_id', '=','facultys.id')
+        // // ->join('user_departments_table','departments.id', '=','user_departments_table.department_id')
+        // ->join('user_departments_tables','departments.id', '=','user_departments_tables.department_id')
+        // ->join('users','user_departments_tables.user_id', '=','users.id')
+        // ->join('lecturerlevels','users.id', '=','lecturerlevels.user_id')
+        // ->join('level','lecturerlevels.level_id', '=','level.id')
+        // ->join('intervals','level.interval_id', '=','intervals.id')
+        // ->select('users.name AS lecturer',
+        //         'facultys.faculty_name AS Faculty',
+        //          'departments.dname AS Department',
+        //          'level.levels_of_teaching AS Rank',)
+        // ->where('users.id',  $user_id)
+        // ->get();
         
         $pdf = PDF::loadView('claim.pdf', compact('extraworkload', 'user_id', 'month'));
 

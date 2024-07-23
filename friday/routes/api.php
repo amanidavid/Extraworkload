@@ -152,21 +152,22 @@ Route::post('/test', function (Request $request) {
                     $lecturerId = $lecturer->id;
 
                     // Check for existing attendance within the module's scheduled time
-                    $existingAttendance = DB::table('records')
+                    $existingAttendances = DB::table('records')
                         ->select('records.ratiba_id', 'records.lecture_id')
                         ->join('ratibas', 'records.ratiba_id', '=', 'ratibas.id')
                         ->join('lecture_ins_tables', 'records.lecture_id', '=', 'lecture_ins_tables.id')
                         ->join('modules', 'lecture_ins_tables.module_id', '=', 'modules.id')
                         ->join('lecturerlevels', 'lecture_ins_tables.lecturerlevels_id', '=', 'lecturerlevels.id')
-                        ->join('rfids', 'lecturerlevels.user_id', '=', 'rfids.user_id')
+                        ->join('users', 'lecturerlevels.user_id', '=', 'users.id')
+                        ->join('rfids', 'users.id', '=', 'rfids.user_id')
                         ->join('clocks as start_clock', 'ratibas.start_time_id', '=', 'start_clock.id')
                         ->join('clocks as end_clock', 'ratibas.end_time_id', '=', 'end_clock.id')
-                        ->where('lecture_ins_tables.module_id', $schedule->module_id)
+                        ->where('lecture_ins_tables.module_id', $lecturer->module_id)
                         ->where('lecturerlevels.user_id', $tag->user_id)
                         ->whereRaw('CURTIME() BETWEEN start_clock.clock AND end_clock.clock')
                         ->exists();
 
-                    if ($existingAttendance) {
+                    if ($existingAttendances) {
                         $matches[] = [
                             "module_code" => $moduleCode,
                             "message" => "RFID card already scanned for this module within the scheduled time"

@@ -62,9 +62,9 @@
         <p>(FULL/PART TIME ACADEMIC STAFF)</p>
         <p>(FOR HUMAN RESOURCES OFFICE)</p>
         @if (!empty($extraworkload))
-        <p><strong>NAME:</strong>{{$extraworkload[0]->lecturer_name}}</p>
-        <p><strong>RANK:</strong>{{$extraworkload[0]->levels_of_teaching}}</p>
-        <p><strong>DEPARTMENT:</strong>{{$extraworkload[0]->Department}}</p>
+        <p><strong>NAME:</strong>{{$extraworkload[0]->name}}</p>
+        <p><strong>RANK:</strong>{{$extraworkload[0]->Rank}}</p>
+        <p><strong>DEPARTMENT:</strong>{{$extraworkload[0]->dname}}</p>
        
         @else
 
@@ -85,11 +85,11 @@
             @foreach($extraworkload as $item)
             <tr>
                 <td>{{ $item->faculty_name }}</td>
-                <td>{{ $item->Department }}</td>
+                <td>{{ $item->dname }}</td>
                 <td>{{ $item->module_code }}</td>
-                <td>{{ $item->Programme }}</td>
-                <td>{{ $item->total_lecture_hours }}</td>
-                <td>{{ $item->total_tutorial_hours }}</td>
+                <td>{{ $item->coursename }}</td>
+                <td>{{ $item->lecture_hrs }}</td>
+                <td>{{ $item->tutorial_hrs }}</td>
                 <td>{{ $item->Total }}</td>
             </tr>
             @endforeach
@@ -110,18 +110,18 @@
             </tr>
             <tr>
                 <td>TOTAL HOURS TAUGHT</td>
-                <td>{{ $extraworkload[0]->total_lecture_hours }}</td>
-                <td>{{ $extraworkload[0]->total_tutorial_hours }}</td>
+                <td>{{ $extraworkload[0]->lecture_hrs }}</td>
+                <td>{{ $extraworkload[0]->tutorial_hrs }}</td>
                 {{-- <td>(Your data here)</td> --}}
-                <td>{{ $extraworkload[0]->overall_total }}</td>
+                <td>{{ $extraworkload[0]->OverallTotal }}</td>
             </tr>
             <tr>
                 <td>MIN WORKLOAD</td>
-                <td colspan="4">{{ $extraworkload[0]->MinWorkload }}</td>
+                <td colspan="4">{{ $extraworkload[0]->Minworkload }}</td>
             </tr>
             <tr>
                 <td>CLAIMED EXTRA HOURS</td>
-                <td colspan="4">{{ $extraworkload[0]->extra_claimed_hrs }}</td>
+                <td colspan="4">{{ $extraworkload[0]->Extraworkload }}</td>
             </tr>
         </table>
         @else
@@ -131,9 +131,11 @@
     @endif
 
     <table>
+        @if (!empty($extraworkload))
+
         <thead>
             <tr>
-                {{-- <th>S/No</th> --}}
+                <th>S/No</th>
                 <th>TRANSPORT ALLOWANCE</th>
                 <th>NUMBER OF SESSIONS/DAYS</th>
             </tr>
@@ -141,23 +143,28 @@
         <tbody>
             {{-- @foreach($extraworkload as $index => $result) --}}
             <tr>
-                {{-- <td>{{ $index + 1 }}</td> --}}
+                <td>i</td>
                 <td>TAUGHT MAIN CAMPUS FROM 7 00PM</td>
-                <td>{{ $extraworkload[0]->TAUGHT_MAIN_CAMPUS_FROM_7_00PM }}</td>
+                <td>{{ $extraworkload[0]->Main_Campus }}</td>
             </tr>
             <tr>
-                {{-- <td>{{ $index + 2 }}</td> --}}
+                <td>ii</td>
                 <td>TAUGHT MAKTABA VENUES</td>
                 <td>{{ $extraworkload[0]->TAUGHT_MAKTABA_VENUES }}</td>
             </tr>
             <tr>
-                {{-- <td>{{ $index + 3 }}</td> --}}
+                <td>iii</td>
                 <td>TAUGHT DURING WEEKENDS</td>
-                <td>{{ $extraworkload[0]->TAUGHT_DURING_WEEKENDS }}</td>
+                <td>{{ $extraworkload[0]->TAUGHT_ON_WEEKENDS }}</td>
             </tr>
             {{-- @endforeach --}}
         </tbody>
     </table>
+    @else
+
+    <h2>No Records Found For Summary</h2>
+
+@endif
     
 
         <div class="footer">
