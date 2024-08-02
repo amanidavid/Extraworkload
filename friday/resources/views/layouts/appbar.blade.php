@@ -1,5 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Change background color of the body */
+        }
+        
+        .attendance-details {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh; /* Adjust the height as needed */
+            background-color: grey; /* Change background color of attendance section */
+            color:blue; /* Change text color in attendance section */
+        }
+        
+        h2 {
+            color:blue; /* Change color of headings */
+        }
+        
+        .header-top-area {
+            background-color:#007bff; /* Change background color of header */
+        }
+        
+        .header-top-area a {
+            margin-bottom: 100%
+            color: #ffffff; /* Change color of links in the header */
+        }
+        
+        .nav-link {
+            color: #ffffff; /* Change color of navigation links */
+        }
+        
+        .nav-link:hover {
+            color: #007bff; /* Change color of navigation links on hover */
+        }
+        
+        .dropdown-header-top {
+            background-color: #ffffff; /* Change background color of dropdowns */
+            color: blue; /* Change text color in dropdowns */
+        }
+        
+        .dropdown-header-top a {
+            color: #007bff; /* Change link color in dropdowns */
+        }
+        
+        .dropdown-header-top a:hover {
+            color: #0056b3; /* Change link color in dropdowns on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Start Welcome area -->
+    <div class="all-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    {{-- <div class="logo-pro">
+                        <a href="index.html"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+        <div class="header-advance-area">
+            <div class="header-top-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="header-top-wraper">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
+                                        <div class="menu-switcher-pro">
+                                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                                                <i class="educate-icon educate-nav"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
+                                        <div class="header-top-menu tabl-d-n">
+                                            <ul class="nav navbar-nav mai-top-nav">
+                                                <li class="nav-item"><a href="{{route('dashboard')}}" class="nav-link">Home</a></li>
+                                                <li class="nav-item"><a href="#" class="nav-link"></a></li>
+                                                <li class="nav-item"><a href="#" class="nav-link"></a></li>
+                                                <li class="nav-item dropdown res-dis-nn">
+                                                    <div role="menu" class="dropdown-menu animated zoomIn">
+                                                        <a href="#" class="dropdown-item"></a>
+                                                        <a href="#" class="dropdown-item"></a>
+                                                        <a href="#" class="dropdown-item"></a>
+                                                        <a href="#" class="dropdown-item"></a>
+                                                    </div>
+                                                </li>
+                                                <li class="nav-item"><a href="#" class="nav-link"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                        <div class="header-right-info">
+                                            <ul class="nav navbar-nav mai-top-nav header-right-menu">
+                                                <li class="nav-item">
+                                                    <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                                        <span class="admin-name">{{Auth::user()->name}}</span>
+                                                        <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
+                                                    </a>
+                                                    <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                                                        <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a></li>
+                                                        <li><a href="#"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a></li>
+                                                        <li>
+                                                            <form method="POST" action="{{ route('logout') }}">
+                                                                @csrf
+                                                                <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"><span class="edu-icon edu-user-rounded author-log-ic"></span> {{ __('Log Out') }}</a>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu start -->
+            <div class="mobile-menu-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="mobile-menu">
+                                <nav id="dropdown">
+                                    <ul class="mobile-menu-nav">
+                                        <li><a data-toggle="collapse" data-target="#Charts" href="#">Home <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul class="collapse dropdown-header-top">
+                                                <li><a href="index.html">Dashboard v.1</a></li>
+                                                <li><a href="index-1.html">Dashboard v.2</a></li>
+                                                <li><a href="index-3.html">Dashboard v.3</a></li>
+                                                <li><a href="analytics.html">Analytics</a></li>
+                                                <li><a href="widgets.html">Widgets</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="events.html">Event</a></li>
+                                        <li><a data-toggle="collapse" data-target="#demoevent" href="#">Professors <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="demoevent" class="collapse dropdown-header-top">
+                                                <li><a href="all-professors.html">All Professors</a></li>
+                                                <li><a href="add-professor.html">Add Professor</a></li>
+                                                <li><a href="edit-professor.html">Edit Professor</a></li>
+                                                <li><a href="professor-profile.html">Professor Profile</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#demopro" href="#">Students <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="demopro" class="collapse dropdown-header-top">
+                                                <li><a href="all-students.html">All Students</a></li>
+                                                <li><a href="add-student.html">Add Student</a></li>
+                                                <li><a href="edit-student.html">Edit Student</a></li>
+                                                <li><a href="student-profile.html">Student Profile</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#democrou" href="#">Courses <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="democrou" class="collapse dropdown-header-top">
+                                                <li><a href="all-courses.html">All Courses</a></li>
+                                                <li><a href="add-course.html">Add Course</a></li>
+                                                <li><a href="edit-course.html">Edit Course</a></li>
+                                                <li><a href="course-profile.html">Courses Info</a></li>
+                                                <li><a href="course-payment.html">Courses Payment</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#demolibra" href="#">Library <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="demolibra" class="collapse dropdown-header-top">
+                                                <li><a href="library-assets.html">Library Assets</a></li>
+                                                <li><a href="add-library-assets.html">Add Library Asset</a></li>
+                                                <li><a href="edit-library-assets.html">Edit Library Asset</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#demodepart" href="#">Departments <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="demodepart" class="collapse dropdown-header-top">
+                                                <li><a href="departments.html">Departments List</a></li>
+                                                <li><a href="add-department.html">Add Departments</a></li>
+                                                <li><a href="edit-department.html">Edit Departments</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#demo" href="#">Mailbox <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="demo" class="collapse dropdown-header-top">
+                                                <li><a href="mailbox.html">Inbox</a></li>
+                                                <li><a href="mailbox-view.html">View Mail</a></li>
+                                                <li><a href="mailbox-compose.html">Compose Mail</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">Interface <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="Miscellaneousmob" class="collapse dropdown-header-top">
+                                                <li><a href="google-map.html">Google Map</a></li>
+                                                <li><a href="data-maps.html">Data Maps</a></li>
+                                                <li><a href="pdf-viewer.html">Pdf Viewer</a></li>
+                                                <li><a href="x-editable.html">X-Editable</a></li>
+                                                <li><a href="code-editor.html">Code Editor</a></li>
+                                                <li><a href="tree-view.html">Tree View</a></li>
+                                                <li><a href="preloader.html">Preloader</a></li>
+                                                <li><a href="images-cropper.html">Images Cropper</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#Chartsmob" href="#">Charts <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="Chartsmob" class="collapse dropdown-header-top">
+                                                <li><a href="bar-charts.html">Bar Charts</a></li>
+                                                <li><a href="line-charts.html">Line Charts</a></li>
+                                                <li><a href="area-charts.html">Area Charts</a></li>
+                                                <li><a href="rounded-chart.html">Rounded Charts</a></li>
+                                                <li><a href="c3.html">C3 Charts</a></li>
+                                                <li><a href="sparkline.html">Sparkline Charts</a></li>
+                                                <li><a href="peity.html">Peity Charts</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#Tablesmob" href="#">Tables <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="Tablesmob" class="collapse dropdown-header-top">
+                                                <li><a href="static-table.html">Static Table</a></li>
+                                                <li><a href="data-table.html">Data Table</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#formsmob" href="#">Forms <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="formsmob" class="collapse dropdown-header-top">
+                                                <li><a href="basic-form-element.html">Basic Form Elements</a></li>
+                                                <li><a href="advance-form-element.html">Advanced Form Elements</a></li>
+                                                <li><a href="password-meter.html">Password Meter</a></li>
+                                                <li><a href="multi-upload.html">Multi Upload</a></li>
+                                                <li><a href="tinymc.html">Text Editor</a></li>
+                                                <li><a href="dual-list-box.html">Dual List Box</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#Appviewsmob" href="#">App views <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="Appviewsmob" class="collapse dropdown-header-top">
+                                                <li><a href="basic-form-element.html">Basic Form Elements</a></li>
+                                                <li><a href="advance-form-element.html">Advanced Form Elements</a></li>
+                                                <li><a href="password-meter.html">Password Meter</a></li>
+                                                <li><a href="multi-upload.html">Multi Upload</a></li>
+                                                <li><a href="tinymc.html">Text Editor</a></li>
+                                                <li><a href="dual-list-box.html">Dual List Box</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" data-target="#Pagemob" href="#">Pages <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
+                                            <ul id="Pagemob" class="collapse dropdown-header-top">
+                                                <li><a href="login.html">Login</a></li>
+                                                <li><a href="register.html">Register</a></li>
+                                                <li><a href="lock.html">Lock</a></li>
+                                                <li><a href="password-recovery.html">Password Recovery</a></li>
+                                                <li><a href="404.html">404 Page</a></li>
+                                                <li><a href="500.html">500 Page</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu end -->
+            <div class="breadcome-area">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="breadcome-list">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="breadcome-heading">
+                                            {{-- <form role="search" class="sr-input-func">
+                                                <input type="text" placeholder="Search..." class="search-int form-control">
+                                                <a href="#"><i class="fa fa-search"></i></a>
+                                            </form> --}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <ul class="breadcome-menu">
+                                            {{-- <li><a href="#">Home</a> <span class="bread-slash">/</span> --}}
+                                            </li>
+                                            {{-- <li><span class="bread-blod"></span> --}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</body>
+
+</html>
+
+ 
+ 
+ 
+ 
+ 
  <!-- Start Welcome area -->
- <div class="all-content-wrapper">
+ {{-- <div class="all-content-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -34,300 +338,7 @@
                                             </li>
                                             <li class="nav-item dropdown res-dis-nn">
                                                 {{-- <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"> <span class="angle-down-topmenu"><i class="fa fa-angle-down"></i></span></a> --}}
-                                                <div role="menu" class="dropdown-menu animated zoomIn">
-                                                    <a href="#" class="dropdown-item"></a>
-                                                    <a href="#" class="dropdown-item"></a>
-                                                    <a href="#" class="dropdown-item"></a>
-                                                    <a href="#" class="dropdown-item"></a>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item"><a href="#" class="nav-link"></a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                    <div class="header-right-info">
-                                        <ul class="nav navbar-nav mai-top-nav header-right-menu">
-                                            
-                                          
-                                            <li class="nav-item">
-                                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                                                        {{-- <img src="img/product/pro4.jpg" alt="" /> --}}
-                                                        <span class="admin-name">{{Auth::user()->name}}</span>
-                                                        <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
-                                                    </a>
-                                                <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                    <li><a href="#"><span class="edu-icon edu-home-admin author-log-ic"></span>My Account</a>
-                                                    </li>
-                                                    <li><a href="#"><span class="edu-icon edu-user-rounded author-log-ic"></span>My Profile</a>
-                                                     </li>
-                                                     <li>
-                                                        <form method="POST" action="{{ route('logout') }}">
-                                                            @csrf
-                                                            <a href="route('logout')"
-                                                            onclick="event.preventDefault();
-                                                         this.closest('form').submit();"><span class="edu-icon edu-user-rounded author-log-ic"></span> {{ __('Log Out') }}</a>
-                                                       
-                                                        </form>
-                                                        </li>
-                                                    
-                                                </ul>
-                                            </li>
-                                            <li class="nav-item nav-setting-open"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="educate-icon educate-menu"></i></a>
-
-                                                <div role="menu" class="admintab-wrap menu-setting-wrap menu-setting-wrap-bg dropdown-menu animated zoomIn">
-                                                    <ul class="nav nav-tabs custon-set-tab">
-                                                        <li class="active"><a data-toggle="tab" href="#Notes">Notes</a>
-                                                        </li>
-                                                        <li><a data-toggle="tab" href="#Projects">Projects</a>
-                                                        </li>
-                                                        <li><a data-toggle="tab" href="#Settings">Settings</a>
-                                                        </li>
-                                                    </ul>
-
-                                                    <div class="tab-content custom-bdr-nt">
-                                                        <div id="Notes" class="tab-pane fade in active">
-                                                            <div class="notes-area-wrap">
-                                                                <div class="note-heading-indicate">
-                                                                    <h2><i class="fa fa-comments-o"></i> Latest Notes</h2>
-                                                                    <p>You have 10 new message.</p>
-                                                                </div>
-                                                                <div class="notes-list-area notes-menu-scrollbar">
-                                                                    <ul class="notes-menu-list">
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/4.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/1.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/2.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/3.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/4.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/1.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/2.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/1.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/2.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="notes-list-flow">
-                                                                                    <div class="notes-img">
-                                                                                        <img src="img/contact/3.jpg" alt="" />
-                                                                                    </div>
-                                                                                    <div class="notes-content">
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more-or-less normal.</p>
-                                                                                        <span>Yesterday 2:45 pm</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div id="Projects" class="tab-pane fade">
-                                                            <div class="projects-settings-wrap">
-                                                                <div class="note-heading-indicate">
-                                                                    <h2><i class="fa fa-cube"></i> Latest projects</h2>
-                                                                    <p> You have 20 projects. 5 not completed.</p>
-                                                                </div>
-                                                                <div class="project-st-list-area project-st-menu-scrollbar">
-                                                                    <ul class="projects-st-menu-list">
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="project-list-flow">
-                                                                                    <div class="projects-st-heading">
-                                                                                        <h2>Web Development</h2>
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more or less normal.</p>
-                                                                                        <span class="project-st-time">1 hours ago</span>
-                                                                                    </div>
-                                                                                    <div class="projects-st-content">
-                                                                                        <p>Completion with: 28%</p>
-                                                                                        <div class="progress progress-mini">
-                                                                                            <div style="width: 28%;" class="progress-bar progress-bar-danger hd-tp-1"></div>
-                                                                                        </div>
-                                                                                        <p>Project end: 4:00 pm - 12.06.2014</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="project-list-flow">
-                                                                                    <div class="projects-st-heading">
-                                                                                        <h2>Software Development</h2>
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more or less normal.</p>
-                                                                                        <span class="project-st-time">2 hours ago</span>
-                                                                                    </div>
-                                                                                    <div class="projects-st-content project-rating-cl">
-                                                                                        <p>Completion with: 68%</p>
-                                                                                        <div class="progress progress-mini">
-                                                                                            <div style="width: 68%;" class="progress-bar hd-tp-2"></div>
-                                                                                        </div>
-                                                                                        <p>Project end: 4:00 pm - 12.06.2014</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="project-list-flow">
-                                                                                    <div class="projects-st-heading">
-                                                                                        <h2>Graphic Design</h2>
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more or less normal.</p>
-                                                                                        <span class="project-st-time">3 hours ago</span>
-                                                                                    </div>
-                                                                                    <div class="projects-st-content">
-                                                                                        <p>Completion with: 78%</p>
-                                                                                        <div class="progress progress-mini">
-                                                                                            <div style="width: 78%;" class="progress-bar hd-tp-3"></div>
-                                                                                        </div>
-                                                                                        <p>Project end: 4:00 pm - 12.06.2014</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="project-list-flow">
-                                                                                    <div class="projects-st-heading">
-                                                                                        <h2>Web Design</h2>
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more or less normal.</p>
-                                                                                        <span class="project-st-time">4 hours ago</span>
-                                                                                    </div>
-                                                                                    <div class="projects-st-content project-rating-cl2">
-                                                                                        <p>Completion with: 38%</p>
-                                                                                        <div class="progress progress-mini">
-                                                                                            <div style="width: 38%;" class="progress-bar progress-bar-danger hd-tp-4"></div>
-                                                                                        </div>
-                                                                                        <p>Project end: 4:00 pm - 12.06.2014</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <a href="#">
-                                                                                <div class="project-list-flow">
-                                                                                    <div class="projects-st-heading">
-                                                                                        <h2>Business Card</h2>
-                                                                                        <p> The point of using Lorem Ipsum is that it has a more or less normal.</p>
-                                                                                        <span class="project-st-time">5 hours ago</span>
-                                                                                    </div>
-                                                                                    <div class="projects-st-content">
-                                                                                        <p>Completion with: 28%</p>
-                                                                                        <div class="progress progress-mini">
-                                                                                            <div style="width: 28%;" class="progress-bar progress-bar-danger hd-tp-5"></div>
-                                                                                        </div>
-                                                                                        <p>Project end: 4:00 pm - 12.06.2014</p>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </li>
-                                                                        <li>
+                                                          {{-- <li> 
                                                                             <a href="#">
                                                                                 <div class="project-list-flow">
                                                                                     <div class="projects-st-heading">
@@ -604,8 +615,8 @@
                                             </li>
                                             <li><a href="mailbox-compose.html">Compose Mail</a>
                                             </li>
-                                        </ul>
-                                    </li>
+                                        </ul> --}}
+                                    {{-- </li>
                                     <li><a data-toggle="collapse" data-target="#Miscellaneousmob" href="#">Interface <span class="admin-project-icon edu-icon edu-down-arrow"></span></a>
                                         <ul id="Miscellaneousmob" class="collapse dropdown-header-top">
                                             <li><a href="google-map.html">Google Map</a>
@@ -737,4 +748,4 @@
     </div>
    
    
-</div>
+</div> --}}

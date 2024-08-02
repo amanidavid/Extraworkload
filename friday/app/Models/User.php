@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
+use Laravel\Jetstream\Rules\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -60,4 +61,18 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function rfids()
+    {
+        return $this->hasMany(Rfid::class);
+    }
+
+    public function enrollments()
+    {
+        return $this->hasManyThrough(Enrollment::class, Rfid::class, 'user_id', 'uid_id', 'id', 'id');
+    }
+    public function User()
+    {
+        return $this->hasMany(Role::class);
+    }
 }

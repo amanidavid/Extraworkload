@@ -21,4 +21,9 @@ class rfid extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class, 'uid_id');
+    }
 }

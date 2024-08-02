@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\AttandenceComponent;
 use App\Livewire\claimformComponent;
@@ -59,4 +60,8 @@ Route::get('/claim/pdf-viewer', function (Request $request) {
     $pdfPath = $request->query('pdfPath');
     return view('claim.pdf-viewer', compact('pdfPath'));
 })->name('claim.pdf-viewer');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-attendance', [AttendanceController::class, 'index'])->name('attendance.index');
+});
 

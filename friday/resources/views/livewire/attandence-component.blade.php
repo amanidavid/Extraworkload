@@ -54,7 +54,7 @@
                                                     <label>Module:</label>
                                                     <select class="chosen-select form-control" name="module_code" tabindex="-1" required>
                                                         <option value="">Select Module</option>
-                                                        @foreach ($module as $module)
+                                                        @foreach ($modules as $module)
                                                             <option value="{{ $module->module_code }}">{{ $module->module_code }}</option>
                                                         @endforeach
                                                     </select>
