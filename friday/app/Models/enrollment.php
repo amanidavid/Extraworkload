@@ -22,8 +22,19 @@ class enrollment extends Model
     //     return $this->hasMany(Attandencesheet::class);
     // }
 
+    public function rfid()
+    {
+        return $this->belongsTo(Rfid::class, 'uid_id');
+    }
+
     public function module()
     {
-        return $this->belongsTo(Module::class);
+        return $this->belongsTo(Module::class, 'module_id');
+    }
+
+    public function records()
+    {
+        return $this->hasMany(Record::class, 'enrollment_id');
     }
 }
+

@@ -12,4 +12,10 @@ class event extends Model
     protected $table = 'events';
     
     protected $fillable =['event_name'];
+    // In Record.php (assuming this is the model for your records)
+public function event()
+{
+    return $this->belongsTo(Event::class);
+}
+
 }

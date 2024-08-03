@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance PDF</title>
     <style>
         body {
@@ -24,16 +26,20 @@
             padding: 8px;
             text-align: left;
         }
+        .symbol {
+            font-family: "Segoe UI Symbol", "Arial Unicode MS", Arial, sans-serif;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>THE INSTITUTE OF FINANCE MANAGEMENT</h1>
         @if (!empty($results))
-            <h2>DEPARTMENT OF {{ $depertment->dept_name }}</h2>
-            <h3>{{ $module_code }} {{ $module_code }} </h3>
-            <h3>{{ $event_name }} </h3>
+            <h2>DEPARTMENT OF {{ $department->dept_name }}</h2>
+            {{-- <h3>{{ $module_code }} - {{ $module_name }}</h3> --}}
             <h3>ATTENDANCE SHEET</h3>
+            <h3>{{ $event_name }}</h3>
+           
         @else
             <h2>No Records Found</h2>
             <p>Parameters: Module Code - {{ $module_code }}, Month - {{ $month }}, Event Name - {{ $event_name }}</p>
@@ -41,7 +47,7 @@
     </div>
     <div class="content">
         @if (!empty($results))
-            <p>Subject:  {{ $module_code }} {{ $module_code }} </p>
+            <p>Subject: {{ $module_code }} - {{ $modulename }}</p>
             <p>Facilitator: {{ $user['name'] }}</p>
             <p>Month: {{ \Carbon\Carbon::create()->month($month)->format('F') }}</p>
             <table>
@@ -49,17 +55,28 @@
                     <tr>
                         <th>S/N</th>
                         <th>Full Name</th>
-                        <th>Registration NUmber</th>
-                        <th>Sign Time</th>
+                        <th>Registration Number</th>
+                        @foreach ($dates as $date)
+                            <th>{{ $date }}</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($results as $index => $result)
+                    @foreach ($attendance as $index => $student)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $result->student_name }}</td>
-                            <td>{{ $result->reg_number }}</td>
-                            <td>{{ $result->created_at }}</td>
+                            <td>{{ $student['student_name'] }}</td>
+                            <td>{{ $student['registration_number'] }}</td>
+                            @foreach ($dates as $date)
+                                <td class="symbol">
+                                    @if ($student['attendance_dates']->contains($date))
+                                      <p style="color: black;">Present</p>
+
+                                    @else
+                                    <p style="color: red;">Absent</p>
+                                    @endif
+                                </td>
+                            @endforeach
                         </tr>
                     @endforeach
                 </tbody>

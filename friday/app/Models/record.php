@@ -25,8 +25,19 @@ class record extends Model
     /**
      * Get the enrollment associated with the attendance sheet.
      */
+  
+
+   
+
+    /**
+     * Get the enrollment associated with the attendance sheet.
+     */
     public function enrollment()
     {
         return $this->belongsTo(Enrollment::class);
+    }
+    public function event()
+    {
+        return $this->belongsTo(Event::class, 'event_id')->withDefault();
     }
 }
