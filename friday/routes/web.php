@@ -23,10 +23,6 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/s', function(){
-    return view('shaaban');
-});
-
 Route::get('/testing', function (Request $request) {
 
     // Query to retrieve the schedule details
