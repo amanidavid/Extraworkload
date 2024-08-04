@@ -22,6 +22,11 @@ Route::get('/', function () {
     // return response()->json(['message' => 'Hello from Laravel!is complex']);
     return view('auth/login');
 });
+
+Route::get('/s', function(){
+    return view('shaaban');
+});
+
 Route::get('/testing', function (Request $request) {
 
     // Query to retrieve the schedule details

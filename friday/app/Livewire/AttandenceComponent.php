@@ -4,8 +4,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Module;
-use App\Models\Event;
+use App\Models\module;
+use App\Models\event;
 use PDF;
 
 class AttandenceComponent extends Component
@@ -23,7 +23,7 @@ class AttandenceComponent extends Component
         ->where('users.id',$user['id'])
         ->select("modules.module_code")
         ->get();
-        $events = Event::all();
+        $events = event::all();
         return view('livewire.attandence-component', compact('modules', 'events'));
     }
 
